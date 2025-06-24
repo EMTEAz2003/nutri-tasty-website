@@ -1,0 +1,8 @@
+﻿<!--
+tailwind.css -->
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* This file would typically be empty if you're using the CDN version of Tailwind
+   or it would contain the compiled Tailwind CSS if you're using a local version */

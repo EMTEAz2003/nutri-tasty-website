@@ -1,0 +1,1042 @@
+﻿
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מידע תזונתי - קפיטריה בריאה</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #f8f5f2;
+        }
+
+        .nutrition-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .nutrition-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+
+        .category-tab {
+            transition: all 0.3s ease;
+        }
+
+            .category-tab.active {
+                background-color: #047857;
+                color: white;
+            }
+
+            .category-tab:not(.active):hover {
+                background-color: #d1fae5;
+            }
+
+        /* Progress bar animation */
+        @keyframes fillProgress {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: var(--progress-width);
+            }
+        }
+
+        .progress-bar {
+            animation: fillProgress 1s ease-out forwards;
+        }
+
+        /* Chart animation */
+        .chart-segment {
+            transition: stroke-dashoffset 1s ease-out;
+        }
+
+        /* Accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+            .accordion-content.active {
+                max-height: 500px;
+            }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+            .accordion-icon.active {
+                transform: rotate(180deg);
+            }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-emerald-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://i.pinimg.com/236x/d3/75/6c/d3756c7803ab55fc8b95cf0cdf16d975.jpg" alt="לוגו נוטרי-טעים" class="h-10 w-10 rounded-full mr-2 border-2 border-white shadow" />
+
+                <div class="text-2xl font-bold">
+
+                    <span>נוטרי-טעים</span>
+                </div>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6 space-x-reverse">
+                    <li><a href="index.html" class="hover:text-emerald-200 font-medium">דף הבית</a></li>
+                    <li><a href="menu.html" class="hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                    <li><a href="subscriptions.html" class="hover:text-emerald-200 font-medium">מנויים</a></li>
+                    <li><a href="nutrition.html" class="hover:text-emerald-200 font-medium font-bold underline">מידע תזונתי</a></li>
+                    <li><a href="about.html" class="hover:text-emerald-200 font-medium">אודות</a></li>
+                    <li><a href="team.html" class="hover:text-emerald-200 font-medium">הצוות</a></li>
+                    <li><a href="suggestions.html">הצעות למנות</a></li>
+                    <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
+
+                </ul>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-emerald-700 pb-4">
+            <ul class="px-4 pt-2 space-y-3">
+                <li><a href="index.html" class="block hover:text-emerald-200 font-medium">דף הבית</a></li>
+                <li><a href="menu.html" class="block hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                <li><a href="subscriptions.html" class="block hover:text-emerald-200 font-medium">מנויים</a></li>
+                <li><a href="nutrition.html" class="block hover:text-emerald-200 font-medium font-bold underline">מידע תזונתי</a></li>
+                <li><a href="about.html" class="block hover:text-emerald-200 font-medium">אודות</a></li>
+                <li><a href="team.html" class="hover:text-emerald-200 font-medium">הצוות</a></li>
+                <li><a href="suggestions.html">הצעות למנות</a></li>
+                <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
+
+            </ul>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <div class="bg-emerald-700 text-white py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold">מידע תזונתי</h1>
+            <p class="mt-2 text-emerald-100">כל מה שצריך לדעת על הערכים התזונתיים של המנות שלנו</p>
+        </div>
+    </div>
+
+    <!-- Nutrition Overview -->
+    <div class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-emerald-800 mb-4">המחויבות שלנו לתזונה בריאה</h2>
+                <p class="text-lg text-emerald-600 max-w-3xl mx-auto">בקפיטריה הבריאה שלנו, אנו מקפידים על שימוש במרכיבים טריים ואיכותיים, תוך שמירה על ערכים תזונתיים גבוהים. כל מנה מתוכננת בקפידה כדי לספק את האיזון המושלם בין טעם מעולה לערכים תזונתיים אופטימליים.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Nutrition Principle 1 -->
+                <div class="nutrition-card bg-emerald-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">מרכיבים טריים ואורגניים</h3>
+                    <p class="text-emerald-600">אנו משתמשים במרכיבים טריים ואורגניים ככל האפשר, תוך שיתוף פעולה עם חקלאים מקומיים לקבלת תוצרת עונתית באיכות גבוהה.</p>
+                </div>
+
+                <!-- Nutrition Principle 2 -->
+                <div class="nutrition-card bg-emerald-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">איזון תזונתי מושלם</h3>
+                    <p class="text-emerald-600">כל מנה מתוכננת בקפידה כדי לספק איזון אופטימלי של חלבונים, פחמימות מורכבות, שומנים בריאים, ויטמינים ומינרלים חיוניים.</p>
+                </div>
+
+                <!-- Nutrition Principle 3 -->
+                <div class="nutrition-card bg-emerald-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">שקיפות מלאה</h3>
+                    <p class="text-emerald-600">אנו מספקים מידע תזונתי מלא לכל מנה, כולל ערכים קלוריים, מרכיבים ואלרגנים, כדי לאפשר לכם לקבל החלטות מושכלות.</p>
+                </div>
+            </div>
+
+            <!-- Nutrition Categories -->
+            <div class="mb-8">
+                <div class="flex overflow-x-auto pb-2 mb-6">
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="category-tab active whitespace-nowrap px-6 py-3 rounded-lg font-medium" data-category="all">הכל</button>
+                        <button class="category-tab whitespace-nowrap px-6 py-3 rounded-lg font-medium" data-category="main">מנות עיקריות</button>
+                        <button class="category-tab whitespace-nowrap px-6 py-3 rounded-lg font-medium" data-category="salad">סלטים</button>
+                        <button class="category-tab whitespace-nowrap px-6 py-3 rounded-lg font-medium" data-category="soup">מרקים</button>
+                        <button class="category-tab whitespace-nowrap px-6 py-3 rounded-lg font-medium" data-category="sandwich">כריכים</button>
+                        <button class="category-tab whitespace-nowrap px-6 py-3 rounded-lg font-medium" data-category="dessert">קינוחים</button>
+                        <button class="category-tab whitespace-nowrap px-6 py-3 rounded-lg font-medium" data-category="drink">משקאות</button>
+                    </div>
+                </div>
+
+                <!-- Search and Dietary Filter -->
+                <div class="flex flex-col md:flex-row gap-4 mb-8">
+                    <div class="relative flex-grow">
+                        <input type="text" id="search-nutrition" placeholder="חיפוש לפי שם מנה..." class="w-full p-3 pr-10 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <div class="md:w-64">
+                        <select id="dietary-filter" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                            <option value="all">כל סוגי התזונה</option>
+                            <option value="vegetarian">צמחוני</option>
+                            <option value="vegan">טבעוני</option>
+                            <option value="gluten-free">ללא גלוטן</option>
+                            <option value="low-carb">דל פחמימות</option>
+                            <option value="high-protein">עתיר חלבון</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Nutrition Items Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Nutrition Item 1 -->
+                    <div class="nutrition-card bg-white rounded-xl overflow-hidden shadow-md" data-category="main" data-dietary="high-protein">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">חזה עוף צלוי</h3>
+                            <div class="flex items-center mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-2">עתיר חלבון</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">דל שומן</span>
+                            </div>
+                            <div class="space-y-3 mb-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">קלוריות</span>
+                                        <span class="text-emerald-600">420 קק"ל</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 42%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">חלבון</span>
+                                        <span class="text-emerald-600">38 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 76%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">פחמימות</span>
+                                        <span class="text-emerald-600">32 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 32%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">שומן</span>
+                                        <span class="text-emerald-600">12 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 24%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-emerald-600 mb-4">
+                                <p><strong>מרכיבים:</strong> חזה עוף, אורז מלא, ירקות מאודים, עשבי תיבול, שמן זית</p>
+                                <p><strong>אלרגנים:</strong> עוף</p>
+                            </div>
+                            <button class="view-nutrition-details w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg transition duration-300 font-medium" data-meal="חזה עוף צלוי">מידע תזונתי מפורט</button>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Item 2 -->
+                    <div class="nutrition-card bg-white rounded-xl overflow-hidden shadow-md" data-category="salad" data-dietary="vegan">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">סלט קינואה וירקות</h3>
+                            <div class="flex items-center mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-2">טבעוני</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">עשיר בסיבים</span>
+                            </div>
+                            <div class="space-y-3 mb-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">קלוריות</span>
+                                        <span class="text-emerald-600">320 קק"ל</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 32%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">חלבון</span>
+                                        <span class="text-emerald-600">10 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 20%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">פחמימות</span>
+                                        <span class="text-emerald-600">42 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 42%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">שומן</span>
+                                        <span class="text-emerald-600">14 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 28%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-emerald-600 mb-4">
+                                <p><strong>מרכיבים:</strong> קינואה, ירקות קלויים (גזר, בטטה, פלפלים), עשבי תיבול, טחינה גולמית, שמן זית, לימון</p>
+                                <p><strong>אלרגנים:</strong> שומשום (בטחינה)</p>
+                            </div>
+                            <button class="view-nutrition-details w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg transition duration-300 font-medium" data-meal="סלט קינואה וירקות">מידע תזונתי מפורט</button>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Item 3 -->
+                    <div class="nutrition-card bg-white rounded-xl overflow-hidden shadow-md" data-category="soup" data-dietary="vegan">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">מרק עדשים</h3>
+                            <div class="flex items-center mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-2">טבעוני</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">עשיר בחלבון צמחי</span>
+                            </div>
+                            <div class="space-y-3 mb-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">קלוריות</span>
+                                        <span class="text-emerald-600">220 קק"ל</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 22%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">חלבון</span>
+                                        <span class="text-emerald-600">12 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 24%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">פחמימות</span>
+                                        <span class="text-emerald-600">36 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 36%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">שומן</span>
+                                        <span class="text-emerald-600">4 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 8%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-emerald-600 mb-4">
+                                <p><strong>מרכיבים:</strong> עדשים, גזר, בצל, סלרי, שום, כורכום, כמון, מלח ים, פלפל שחור, שמן זית</p>
+                                <p><strong>אלרגנים:</strong> ללא אלרגנים ידועים</p>
+                            </div>
+                            <button class="view-nutrition-details w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg transition duration-300 font-medium" data-meal="מרק עדשים">מידע תזונתי מפורט</button>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Item 4 -->
+                    <div class="nutrition-card bg-white rounded-xl overflow-hidden shadow-md" data-category="sandwich" data-dietary="vegetarian">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">כריך אבוקדו וירקות</h3>
+                            <div class="flex items-center mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-2">צמחוני</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">עשיר בשומנים בריאים</span>
+                            </div>
+                            <div class="space-y-3 mb-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">קלוריות</span>
+                                        <span class="text-emerald-600">380 קק"ל</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 38%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">חלבון</span>
+                                        <span class="text-emerald-600">8 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 16%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">פחמימות</span>
+                                        <span class="text-emerald-600">46 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 46%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">שומן</span>
+                                        <span class="text-emerald-600">18 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 36%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-emerald-600 mb-4">
+                                <p><strong>מרכיבים:</strong> לחם מחמצת, אבוקדו, עגבנייה, מלפפון, חסה, בצל סגול</p>
+                                <p><strong>אלרגנים:</strong> גלוטן</p>
+                            </div>
+                            <button class="view-nutrition-details w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg transition duration-300 font-medium" data-meal="כריך אבוקדו וירקות">מידע תזונתי מפורט</button>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Item 5 -->
+                    <div class="nutrition-card bg-white rounded-xl overflow-hidden shadow-md" data-category="dessert" data-dietary="vegetarian">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">עוגת גבינה ופירות יער</h3>
+                            <div class="flex items-center mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-2">צמחוני</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">עשיר בסידן</span>
+                            </div>
+                            <div class="space-y-3 mb-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">קלוריות</span>
+                                        <span class="text-emerald-600">320 קק"ל</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 32%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">חלבון</span>
+                                        <span class="text-emerald-600">8 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 16%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">פחמימות</span>
+                                        <span class="text-emerald-600">36 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 36%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">שומן</span>
+                                        <span class="text-emerald-600">16 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 32%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-emerald-600 mb-4">
+                                <p><strong>מרכיבים:</strong> גבינת שמנת, ביצים, סוכר, קמח, חמאה, פירות יער</p>
+                                <p><strong>אלרגנים:</strong> גלוטן, חלב, ביצים</p>
+                            </div>
+                            <button class="view-nutrition-details w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg transition duration-300 font-medium" data-meal="עוגת גבינה ופירות יער">מידע תזונתי מפורט</button>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Item 6 -->
+                    <div class="nutrition-card bg-white rounded-xl overflow-hidden shadow-md" data-category="drink" data-dietary="vegan">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">סמוזי פירות טריים</h3>
+                            <div class="flex items-center mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-2">טבעוני</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">עשיר בויטמינים</span>
+                            </div>
+                            <div class="space-y-3 mb-4">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">קלוריות</span>
+                                        <span class="text-emerald-600">180 קק"ל</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 18%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">חלבון</span>
+                                        <span class="text-emerald-600">2 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 4%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">פחמימות</span>
+                                        <span class="text-emerald-600">42 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 42%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-emerald-800">שומן</span>
+                                        <span class="text-emerald-600">1 גרם</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full progress-bar" style="--progress-width: 2%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-emerald-600 mb-4">
+                                <p><strong>מרכיבים:</strong> תות, בננה, מנגו, תפוח, מים</p>
+                                <p><strong>אלרגנים:</strong> ללא אלרגנים ידועים</p>
+                            </div>
+                            <button class="view-nutrition-details w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg transition duration-300 font-medium" data-meal="סמוזי פירות טריים">מידע תזונתי מפורט</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nutrition Calculator -->
+    <div class="py-12 bg-emerald-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-emerald-800 mb-4">מחשבון תזונה</h2>
+                <p class="text-lg text-emerald-600 max-w-3xl mx-auto">חשבו את הצריכה הקלורית היומית המומלצת עבורכם וקבלו המלצות לתפריט מותאם אישית</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <form id="nutrition-calculator-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="gender" class="block text-emerald-700 font-medium mb-2">מגדר</label>
+                                <div class="flex space-x-4 space-x-reverse">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="gender" value="male" class="form-radio text-emerald-600" checked>
+                                        <span class="mr-2">זכר</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="gender" value="female" class="form-radio text-emerald-600">
+                                        <span class="mr-2">נקבה</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="age" class="block text-emerald-700 font-medium mb-2">גיל</label>
+                                <input type="number" id="age" name="age" min="18" max="100" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            </div>
+                            <div>
+                                <label for="height" class="block text-emerald-700 font-medium mb-2">גובה (ס"מ)</label>
+                                <input type="number" id="height" name="height" min="140" max="220" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            </div>
+                            <div>
+                                <label for="weight" class="block text-emerald-700 font-medium mb-2">משקל (ק"ג)</label>
+                                <input type="number" id="weight" name="weight" min="40" max="200" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            </div>
+                            <div>
+                                <label for="activity" class="block text-emerald-700 font-medium mb-2">רמת פעילות גופנית</label>
+                                <select id="activity" name="activity" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <option value="1.2">מינימלית (ישיבה רוב היום)</option>
+                                    <option value="1.375">קלה (פעילות קלה 1-3 פעמים בשבוע)</option>
+                                    <option value="1.55" selected>בינונית (פעילות בינונית 3-5 פעמים בשבוע)</option>
+                                    <option value="1.725">גבוהה (פעילות אינטנסיבית 6-7 פעמים בשבוע)</option>
+                                    <option value="1.9">מאוד גבוהה (פעילות אינטנסיבית יומית)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="goal" class="block text-emerald-700 font-medium mb-2">מטרה</label>
+                                <select id="goal" name="goal" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <option value="lose">ירידה במשקל</option>
+                                    <option value="maintain" selected>שמירה על המשקל</option>
+                                    <option value="gain">עלייה במשקל</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-lg transition duration-300 font-bold">חשב</button>
+                    </form>
+
+                    <!-- Results Section (initially hidden) -->
+                    <div id="calculator-results" class="mt-8 hidden">
+                        <div class="border-t border-emerald-200 pt-6">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-4">התוצאות שלך</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div class="bg-emerald-50 p-4 rounded-lg text-center">
+                                    <div class="text-emerald-600 font-medium mb-1">BMR</div>
+                                    <div class="text-2xl font-bold text-emerald-800" id="bmr-result">1,500</div>
+                                    <div class="text-sm text-emerald-600">קלוריות בסיסיות</div>
+                                </div>
+                                <div class="bg-emerald-50 p-4 rounded-lg text-center">
+                                    <div class="text-emerald-600 font-medium mb-1">TDEE</div>
+                                    <div class="text-2xl font-bold text-emerald-800" id="tdee-result">2,250</div>
+                                    <div class="text-sm text-emerald-600">קלוריות לפי פעילות</div>
+                                </div>
+                                <div class="bg-emerald-50 p-4 rounded-lg text-center">
+                                    <div class="text-emerald-600 font-medium mb-1">יעד יומי</div>
+                                    <div class="text-2xl font-bold text-emerald-800" id="goal-result">2,000</div>
+                                    <div class="text-sm text-emerald-600">קלוריות מומלצות</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <h4 class="font-bold text-emerald-800 mb-2">חלוקת מקרו-נוטריאנטים מומלצת</h4>
+                                <div class="bg-emerald-50 p-4 rounded-lg">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-full">
+                                            <div class="flex h-4 overflow-hidden bg-emerald-100 rounded-full">
+                                                <div class="bg-emerald-600" style="width: 30%"></div>
+                                                <div class="bg-emerald-400" style="width: 45%"></div>
+                                                <div class="bg-emerald-300" style="width: 25%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-2 text-center text-sm">
+                                        <div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-3 h-3 bg-emerald-600 rounded-full mr-1"></div>
+                                                <span class="font-medium">חלבון</span>
+                                            </div>
+                                            <div class="font-bold text-emerald-800" id="protein-result">150 גרם (30%)</div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-3 h-3 bg-emerald-400 rounded-full mr-1"></div>
+                                                <span class="font-medium">פחמימות</span>
+                                            </div>
+                                            <div class="font-bold text-emerald-800" id="carbs-result">225 גרם (45%)</div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-3 h-3 bg-emerald-300 rounded-full mr-1"></div>
+                                                <span class="font-medium">שומן</span>
+                                            </div>
+                                            <div class="font-bold text-emerald-800" id="fat-result">56 גרם (25%)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-emerald-800 mb-2">המלצות מותאמות אישית</h4>
+                                <div class="bg-emerald-50 p-4 rounded-lg">
+                                    <p class="text-emerald-600 mb-4" id="recommendations-text">בהתבסס על הנתונים שהזנת, אנו ממליצים על תפריט מאוזן עם דגש על חלבונים איכותיים, פחמימות מורכבות ושומנים בריאים. שתייה של לפחות 8 כוסות מים ביום ופעילות גופנית סדירה יסייעו לך להשיג את היעדים שלך.</p>
+
+                                    <div class="mb-4">
+                                        <h5 class="font-medium text-emerald-800 mb-2">מנות מומלצות מהתפריט שלנו:</h5>
+                                        <ul class="space-y-2 text-emerald-600" id="recommended-meals">
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span>חזה עוף צלוי עם אורז מלא וירקות</span>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span>סלט קינואה וירקות עם טחינה</span>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span>מרק עדשים עם לחם מחמצת</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <a href="menu.html" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg transition duration-300 font-medium">צפה בתפריט המלא</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nutrition FAQ -->
+    <div class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-emerald-800 mb-4">שאלות נפוצות על תזונה</h2>
+                <p class="text-lg text-emerald-600 max-w-3xl mx-auto">מצאו תשובות לשאלות הנפוצות ביותר בנושא תזונה בריאה ומאוזנת</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="accordion-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">מהי תזונה מאוזנת?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="accordion-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-6">
+                            <p class="text-emerald-600">תזונה מאוזנת היא תזונה המספקת לגוף את כל אבות המזון, הוויטמינים והמינרלים הדרושים לתפקוד אופטימלי. היא כוללת מגוון מזונות מכל קבוצות המזון: חלבונים (בשר, דגים, ביצים, קטניות), פחמימות מורכבות (דגנים מלאים, אורז מלא, קינואה), שומנים בריאים (אבוקדו, אגוזים, שמן זית), ירקות ופירות. תזונה מאוזנת מסייעת בשמירה על משקל תקין, מחזקת את מערכת החיסון ומפחיתה את הסיכון למחלות כרוניות.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="accordion-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">כמה חלבון צריך לצרוך ביום?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="accordion-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-6">
+                            <p class="text-emerald-600">ההמלצה הכללית היא לצרוך כ-0.8 גרם חלבון לכל ק"ג ממשקל הגוף. עבור אדם במשקל 70 ק"ג, זה מתורגם לכ-56 גרם חלבון ביום. עם זאת, אנשים פעילים, ספורטאים, או אנשים המנסים לבנות מסת שריר עשויים להזדקק ליותר - בין 1.2 ל-2 גרם לק"ג ממשקל הגוף. חשוב לציין שצריכת חלבון צריכה להיות מפוזרת לאורך היום ולא מרוכזת בארוחה אחת, כדי לאפשר ניצול מיטבי של החלבון על ידי הגוף.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="accordion-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">האם פחמימות הן באמת "רעות"?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="accordion-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-6">
+                            <p class="text-emerald-600">פחמימות אינן "רעות" - הן מקור אנרגיה חשוב לגוף ולמוח. ההבדל המשמעותי הוא בין פחמימות פשוטות (סוכר, קמח לבן) לבין פחמימות מורכבות (דגנים מלאים, קטניות, ירקות). פחמימות מורכבות מתעכלות לאט יותר, משפיעות פחות על רמות הסוכר בדם ומספקות סיבים תזונתיים, ויטמינים ומינרלים. מומלץ להעדיף פחמימות מורכבות ולהגביל את צריכת הפחמימות הפשוטות והמעובדות. כמות הפחמימות היומית תלויה ברמת הפעילות הגופנית, במטרות האישיות ובמצב הבריאותי.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="accordion-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">מהם שומנים בריאים וכמה מהם צריך לצרוך?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="accordion-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-6">
+                            <p class="text-emerald-600">שומנים בריאים כוללים שומנים חד-בלתי רוויים (שמן זית, אבוקדו, אגוזים) ושומנים רב-בלתי רוויים (דגים שמנים, זרעי פשתן, אגוזי מלך). שומנים אלה חיוניים לבריאות המוח, לספיגת ויטמינים מסוימים ולתפקוד תקין של הגוף. ההמלצה היא שכ-25-35% מהקלוריות היומיות יגיעו משומנים, כאשר רוב השומנים צריכים להיות מהסוגים הבריאים. חשוב להגביל את צריכת השומנים הרוויים (בשר שמן, מוצרי חלב מלאים) והשומנים הטרנס (מזון מעובד, מרגרינה).</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="accordion-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">כיצד לשמור על תזונה בריאה בזמן אכילה מחוץ לבית?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="accordion-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-6">
+                            <p class="text-emerald-600">שמירה על תזונה בריאה מחוץ לבית אפשרית עם קצת תכנון מראש. בחרו מסעדות המציעות אפשרויות בריאות, העדיפו מנות מבוססות על חלבונים רזים וירקות, בקשו רטבים בצד, הימנעו ממנות מטוגנות והעדיפו שיטות בישול כמו אפייה, צלייה או אידוי. בדקו את התפריט מראש אם אפשר, ושקלו לחלוק מנה גדולה או לקחת חלק מהארוחה הביתה. בקפיטריה שלנו, אנו מציעים מידע תזונתי מלא לכל המנות, כך שתוכלו לבחור את האפשרויות המתאימות ביותר לצרכים התזונתיים שלכם.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Nutrition Modal -->
+    <div id="nutrition-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-emerald-800" id="nutrition-modal-title">מידע תזונתי מפורט - חזה עוף צלוי</h3>
+                    <button id="close-nutrition-modal" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <!-- Nutrition Facts -->
+                <div class="mb-8">
+                    <h4 class="text-lg font-bold text-emerald-800 mb-4">ערכים תזונתיים (למנה)</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-emerald-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-medium text-emerald-800">קלוריות</span>
+                                <span class="font-bold text-emerald-600" id="modal-calories">420 קק"ל</span>
+                            </div>
+                            <div class="w-full bg-emerald-100 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full progress-bar" id="modal-calories-bar" style="--progress-width: 42%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-medium text-emerald-800">חלבון</span>
+                                <span class="font-bold text-emerald-600" id="modal-protein">38 גרם</span>
+                            </div>
+                            <div class="w-full bg-emerald-100 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full progress-bar" id="modal-protein-bar" style="--progress-width: 76%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-medium text-emerald-800">פחמימות</span>
+                                <span class="font-bold text-emerald-600" id="modal-carbs">32 גרם</span>
+                            </div>
+                            <div class="w-full bg-emerald-100 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full progress-bar" id="modal-carbs-bar" style="--progress-width: 32%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-medium text-emerald-800">שומן</span>
+                                <span class="font-bold text-emerald-600" id="modal-fat">12 גרם</span>
+                            </div>
+                            <div class="w-full bg-emerald-100 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full progress-bar" id="modal-fat-bar" style="--progress-width: 24%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nutrition Chart -->
+                <div class="mb-8">
+                    <h4 class="text-lg font-bold text-emerald-800 mb-4">התפלגות מקרו-נוטריאנטים</h4>
+                    <div class="flex justify-center">
+                        <div class="w-48 h-48 relative">
+                            <svg viewBox="0 0 36 36" class="w-full h-full">
+                                <path id="modal-protein-segment" class="chart-segment" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#047857" stroke-width="3" stroke-dasharray="30, 100" stroke-dashoffset="25" />
+                                <path id="modal-carbs-segment" class="chart-segment" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="45, 100" stroke-dashoffset="75" />
+                                <path id="modal-fat-segment" class="chart-segment" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#6ee7b7" stroke-width="3" stroke-dasharray="25, 100" stroke-dashoffset="25" />
+                                <text x="18" y="20.35" class="text-5xl font-bold" text-anchor="middle" fill="#047857" id="modal-calories-percent">100%</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex justify-center space-x-4 space-x-reverse mt-4">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-emerald-600 rounded-full ml-1"></div>
+                            <span class="text-sm text-emerald-800">חלבון (30%)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-emerald-400 rounded-full ml-1"></div>
+                            <span class="text-sm text-emerald-800">פחמימות (45%)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-emerald-300 rounded-full ml-1"></div>
+                            <span class="text-sm text-emerald-800">שומן (25%)</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- אפשר להוסיף כאן עוד פירוט לפי צורך -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">נוטרי-טעים</h3>
+                    <p class="text-emerald-200">אוכל טעים ובריא </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">שעות פעילות</h3>
+                    <ul class="space-y-2 text-emerald-200">
+                        <li>ראשון - חמישי: 8:00 - 18:00</li>
+                        <li>שישי: 8:00 - 14:00</li>
+                        <li>שבת: סגור</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">צור קשר</h3>
+                    <ul class="space-y-2 text-emerald-200">
+                        <li>טלפון: 050-4259903</li>
+                        <li>דוא"ל: Emteazgama@gmail.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">הרשמה לעדכונים</h3>
+                    <form class="space-y-3">
+                        <div>
+                            <input type="email" placeholder="הזן את כתובת הדוא״ל שלך" class="w-full p-3 rounded-lg bg-emerald-700 text-white placeholder-emerald-300 border border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        </div>
+                        <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">הרשם</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-emerald-700 mt-8 pt-8 text-center text-emerald-300">
+                <p>&copy; 2025 נוטרי-טעים. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- סקריפטים -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').onclick = function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        };
+
+        // Tabs & Search Filter
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const nutritionCards = document.querySelectorAll('.nutrition-card[data-category]');
+        const searchInput = document.getElementById('search-nutrition');
+        const dietaryFilter = document.getElementById('dietary-filter');
+
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                filterNutrition();
+            });
+        });
+
+        searchInput.addEventListener('input', filterNutrition);
+        dietaryFilter.addEventListener('change', filterNutrition);
+
+        function filterNutrition() {
+            const activeTab = document.querySelector('.category-tab.active');
+            const selectedCategory = activeTab ? activeTab.getAttribute('data-category') : 'all';
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedDietary = dietaryFilter.value;
+
+            nutritionCards.forEach(card => {
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                const category = card.getAttribute('data-category');
+                const dietary = card.getAttribute('data-dietary');
+                let show = true;
+
+                if (selectedCategory !== 'all' && category !== selectedCategory) show = false;
+                if (selectedDietary !== 'all' && dietary !== selectedDietary) show = false;
+                if (searchTerm && !name.includes(searchTerm)) show = false;
+
+                card.style.display = show ? '' : 'none';
+            });
+        }
+
+        // Nutrition Modal
+        const modal = document.getElementById('nutrition-modal');
+        const closeModalBtn = document.getElementById('close-nutrition-modal');
+        document.querySelectorAll('.view-nutrition-details').forEach(btn => {
+            btn.addEventListener('click', function () {
+                // אפשר להרחיב ולהתאים את המידע לפי מנה
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        closeModalBtn.addEventListener('click', function () {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Accordion FAQ
+        document.querySelectorAll('.accordion-toggle').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('.accordion-icon');
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                    icon.classList.remove('active');
+                } else {
+                    document.querySelectorAll('.accordion-content').forEach(ac => ac.classList.remove('active'));
+                    document.querySelectorAll('.accordion-icon').forEach(ic => ic.classList.remove('active'));
+                    content.classList.add('active');
+                    icon.classList.add('active');
+                }
+            });
+        });
+
+        // מחשבון תזונה
+        document.getElementById('nutrition-calculator-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const gender = this.gender.value;
+            const age = +this.age.value;
+            const height = +this.height.value;
+            const weight = +this.weight.value;
+            const activity = +this.activity.value;
+            const goal = this.goal.value;
+
+            // נוסחת Harris-Benedict
+            let bmr;
+            if (gender === 'male') {
+                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } else {
+                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+
+            const tdee = bmr * activity;
+            let goalCalories = tdee;
+            if (goal === 'lose') goalCalories -= 400;
+            else if (goal === 'gain') goalCalories += 400;
+
+            // חישוב מקרו-נוטריאנטים
+            const protein = Math.round(goalCalories * 0.3 / 4);
+            const carbs = Math.round(goalCalories * 0.45 / 4);
+            const fat = Math.round(goalCalories * 0.25 / 9);
+
+            // עדכון תוצאות
+            document.getElementById('calculator-results').classList.remove('hidden');
+            document.getElementById('bmr-result').textContent = Math.round(bmr);
+            document.getElementById('tdee-result').textContent = Math.round(tdee);
+            document.getElementById('goal-result').textContent = Math.round(goalCalories);
+
+            document.getElementById('protein-result').textContent = protein + ' גרם (30%)';
+            document.getElementById('carbs-result').textContent = carbs + ' גרם (45%)';
+            document.getElementById('fat-result').textContent = fat + ' גרם (25%)';
+
+            // אפשר לעדכן גם את ההמלצות לפי תוצאות...
+        });
+
+        // הרצת האנימציות של progress-bar בכל הצגה
+        document.querySelectorAll('.progress-bar').forEach(bar => {
+            bar.style.width = bar.style.getPropertyValue('--progress-width');
+        });
+
+        // הצגה ראשונית של כל המנות
+        filterNutrition();
+    </script>
+</body>
+</html>

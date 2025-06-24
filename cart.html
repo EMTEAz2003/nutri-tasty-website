@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>סל הקניות - נוטרי-טעים</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-emerald-50 min-h-screen flex flex-col">
+    <!-- Header/Navbar (אותו קוד כמו שאר הדפים) -->
+    <header class="bg-emerald-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://i.pinimg.com/236x/d3/75/6c/d3756c7803ab55fc8b95cf0cdf16d975.jpg" alt="לוגו נוטרי-טעים" class="h-10 w-10 rounded-full mr-2 border-2 border-white shadow" />
+                <div class="text-2xl font-bold"><span>נוטרי-טעים</span></div>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6 space-x-reverse">
+                    <li><a href="index.html" class="hover:text-emerald-200 font-medium">דף הבית</a></li>
+                    <li><a href="menu.html" class="hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                    <li><a href="subscriptions.html" class="hover:text-emerald-200 font-medium">מנויים</a></li>
+           
+                    <li><a href="nutrition.html" class="hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
+                    <li><a href="about.html" class="hover:text-emerald-200 font-medium">אודות</a></li>
+                    <li><a href="team.html" class="hover:text-emerald-200 font-medium">הצוות</a></li>
+                    <li><a href="suggestions.html">הצעות למנות</a></li>
+                    <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
+
+                </ul>
+            </nav>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-emerald-700 pb-4">
+            <ul class="px-4 pt-2 space-y-3">
+                <li><a href="index.html" class="block hover:text-emerald-200 font-medium">דף הבית</a></li>
+                <li><a href="menu.html" class="block hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                <li><a href="subscriptions.html" class="block hover:text-emerald-200 font-medium">מנויים</a></li>
+             
+                <li><a href="nutrition.html" class="block hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
+                <li><a href="about.html" class="block hover:text-emerald-200 font-medium">אודות</a></li>
+                <li><a href="team.html" class="block hover:text-emerald-200 font-medium">הצוות</a></li>
+                <li><a href="suggestions.html">הצעות למנות</a></li>
+                <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
+
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <section class="max-w-3xl mx-auto px-4 py-12">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h1 class="text-3xl font-bold text-emerald-700 mb-8 text-center">הסל שלי</h1>
+                <div id="cartItems"></div>
+                <div class="mt-8 flex justify-between items-center">
+                    <span class="text-xl font-bold text-emerald-700">סך הכל לתשלום: <span id="cartTotal">0</span> ₪</span>
+                    <button id="checkoutBtn" class="bg-emerald-600 text-white px-8 py-3 rounded-full font-bold hover:bg-emerald-700 transition">לתשלום</button>
+                </div>
+                <div id="checkoutMessage" class="mt-6 text-center text-lg font-bold text-emerald-700"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (כמו שאר הדפים) -->
+    <footer class="bg-emerald-800 text-white py-12 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">נוטרי-טעים</h3>
+                    <p class="text-emerald-200">אוכל טעים ובריא</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">שעות פעילות</h3>
+                    <ul class="space-y-2 text-emerald-200">
+                        <li>ראשון - חמישי: 8:00 - 18:00</li>
+                        <li>שישי: 8:00 - 14:00</li>
+                        <li>שבת: סגור</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">צור קשר</h3>
+                    <ul class="space-y-2 text-emerald-200">
+                        <li>טלפון: 050-4259903</li>
+                        <li>דוא"ל: Emteazgama@gmail.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">הרשמה לעדכונים</h3>
+                    <form class="space-y-3">
+                        <div>
+                            <input type="email" placeholder="הזן את כתובת הדוא״ל שלך" class="w-full p-3 rounded-lg bg-emerald-700 text-white placeholder-emerald-300 border border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        </div>
+                        <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">הרשם</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-emerald-700 mt-8 pt-8 text-center text-emerald-300">
+                <p>&copy; 2025 נוטרי-טעים. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // טען פריטים מהסל ב-localStorage
+    function renderCart() {
+        const items = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cartDiv = document.getElementById('cartItems');
+        let total = 0;
+        if (items.length === 0) {
+            cartDiv.innerHTML = '<p class="text-center text-gray-600">הסל שלך ריק</p>';
+        } else {
+            let html = `<table class="min-w-full border my-table"><thead>
+                <tr>
+                    <th>שם מנה</th>
+                    <th>מחיר</th>
+                    <th>כמות</th>
+                    <th>סה״כ</th>
+                    <th>הסר</th>
+                </tr></thead><tbody>`;
+            items.forEach((item, i) => {
+                html += `<tr>
+                   <td>${item.title || item.name}</td>
+
+                    <td>${item.price} ₪</td>
+                    <td>
+                        <button onclick="changeQty(${i},-1)" class="px-2">-</button>
+                        ${item.qty}
+                        <button onclick="changeQty(${i},1)" class="px-2">+</button>
+                    </td>
+                    <td>${item.price * item.qty} ₪</td>
+                    <td><button onclick="removeItem(${i})" class="text-red-600 font-bold">X</button></td>
+                </tr>`;
+                total += item.price * item.qty;
+            });
+            html += `</tbody></table>`;
+            cartDiv.innerHTML = html;
+        }
+        document.getElementById('cartTotal').textContent = total;
+    }
+
+    // שינוי כמות
+    function changeQty(i, delta) {
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        cart[i].qty += delta;
+        if (cart[i].qty < 1) cart[i].qty = 1;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+    }
+    // הסרת פריט
+    function removeItem(i) {
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        cart.splice(i, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    // תשלום (הדגמה בלבד)
+    document.addEventListener('DOMContentLoaded', () => {
+        renderCart();
+        document.getElementById('checkoutBtn').onclick = function() {
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            if (cart.length === 0) {
+                alert("הסל שלך ריק");
+            } else {
+                localStorage.removeItem('cart');
+                renderCart();
+                document.getElementById('checkoutMessage').innerHTML = 'תודה על הרכישה! ההזמנה התקבלה ותצא אליך בקרוב 😊';
+            }
+        };
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        if (menuBtn) {
+            menuBtn.onclick = function () {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            };
+        }
+    });
+    </script>
+</body>
+</html>

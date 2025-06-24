@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מנויים - נוטרי-טעים</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Heebo', sans-serif; background-color: #f8f5f2; }
+        .subscription-card { transition: transform 0.3s, box-shadow 0.3s; }
+        .subscription-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);}
+        .cart-badge {
+            background: #16a34a; color: #fff; font-size: 0.9em;
+            border-radius: 9999px; padding: 0.1em 0.7em;
+            position: absolute; top: -8px; left: -10px;
+        }
+        .toast {
+            animation: slideIn 0.2s, fadeOut 0.5s 2.0s forwards;
+            position: fixed; top: 20px; left: 50%;
+            transform: translateX(-50%); background: #16a34a;
+            color: #fff; padding: 14px 28px; border-radius: 16px;
+            font-size: 1.15em; z-index: 9999; display: none;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-50%) translateY(-40px);}
+            to { opacity: 1; transform: translateX(-50%) translateY(0);}
+        }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden;} }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-emerald-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://i.pinimg.com/236x/d3/75/6c/d3756c7803ab55fc8b95cf0cdf16d975.jpg" class="h-10 w-10 rounded-full mr-2 border-2 border-white shadow" />
+                <div class="text-2xl font-bold">נוטרי-טעים</div>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6 space-x-reverse">
+                    <li><a href="index.html" class="hover:text-emerald-200 font-medium">דף הבית</a></li>
+                    <li><a href="menu.html" class="hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                    <li><a href="subscriptions.html" class="hover:text-emerald-200 font-medium underline font-bold">מנויים</a></li>
+                    <li><a href="nutrition.html" class="hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
+                    <li><a href="about.html" class="hover:text-emerald-200 font-medium">אודות</a></li>
+                    <li><a href="team.html" class="hover:text-emerald-200 font-medium">הצוות</a></li>
+                    <li><a href="suggestions.html" class="hover:text-emerald-200 font-medium">הצעות למנות</a></li>
+                    <li>
+                        <a href="cart.html" class="relative hover:text-emerald-200 font-medium flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007 17h10a1 1 0 00.95-1.32L17 13M7 13V6h10v7"/>
+                            </svg>
+                            <span id="cart-count" class="cart-badge" style="display:none"></span>
+                            הסל שלי
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-emerald-700 pb-4">
+            <ul class="px-4 pt-2 space-y-3">
+                <li><a href="index.html" class="block hover:text-emerald-200 font-medium">דף הבית</a></li>
+                <li><a href="menu.html" class="block hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                <li><a href="subscriptions.html" class="block hover:text-emerald-200 font-medium underline font-bold">מנויים</a></li>
+                <li><a href="nutrition.html" class="block hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
+                <li><a href="about.html" class="block hover:text-emerald-200 font-medium">אודות</a></li>
+                <li><a href="team.html" class="block hover:text-emerald-200 font-medium">הצוות</a></li>
+                <li><a href="suggestions.html" class="hover:text-emerald-200 font-medium">הצעות למנות</a></li>
+                <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- אזור הכותרת -->
+    <div class="bg-emerald-700 text-white py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold">תכניות מנויים</h1>
+            <p class="mt-2 text-emerald-100">חסכו זמן וכסף עם תכניות המנויים שלנו</p>
+        </div>
+    </div>
+
+    <!-- Subscription Plans -->
+    <div class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-emerald-800 mb-4">בחרו את התכנית המתאימה לכם</h2>
+                <p class="text-lg text-emerald-600 max-w-2xl mx-auto">תכניות המנויים שלנו מציעות גמישות, חיסכון והטבות בלעדיות. הצטרפו עוד היום וקבלו ארוחות בריאות וטעימות בקלות.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Basic Plan -->
+                <div class="subscription-card bg-emerald-50 rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-emerald-600 text-white p-6 text-center">
+                        <h3 class="text-2xl font-bold">בסיסי</h3>
+                        <div class="mt-4">
+                            <span class="text-4xl font-bold">₪299</span>
+                            <span class="text-emerald-100">/חודש</span>
+                        </div>
+                        <p class="mt-2 text-emerald-100">10 ארוחות בחודש</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>10 ארוחות לבחירה מהתפריט היומי</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>חיסכון של 10% ממחיר הרגיל</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>הזמנה מראש דרך האפליקציה</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>תקף ל-30 יום</li>
+                        </ul>
+                        <button class="add-subscription-btn w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-bold transition" data-name="בסיסי" data-price="299">הוסף לסל</button>
+                    </div>
+                </div>
+
+                <!-- Standard Plan -->
+                <div class="subscription-card bg-white rounded-xl overflow-hidden shadow-lg border-2 border-emerald-500 transform scale-105">
+                    <div class="absolute top-0 left-0 right-0">
+                        <div class="bg-emerald-500 text-white text-center py-1 font-bold">הכי פופולרי</div>
+                    </div>
+                    <div class="bg-emerald-600 text-white p-6 text-center pt-8">
+                        <h3 class="text-2xl font-bold">סטנדרט</h3>
+                        <div class="mt-4">
+                            <span class="text-4xl font-bold">₪499</span>
+                            <span class="text-emerald-100">/חודש</span>
+                        </div>
+                        <p class="mt-2 text-emerald-100">20 ארוחות בחודש</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>20 ארוחות לבחירה מהתפריט היומי</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>חיסכון של 15% ממחיר הרגיל</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>הזמנה מראש דרך האפליקציה</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>משקה חינם עם כל ארוחה</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>תקף ל-45 יום</li>
+                        </ul>
+                        <button class="add-subscription-btn w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-bold transition" data-name="סטנדרט" data-price="499">הוסף לסל</button>
+                    </div>
+                </div>
+                <!-- Premium Plan -->
+                <div class="subscription-card bg-emerald-50 rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-emerald-600 text-white p-6 text-center">
+                        <h3 class="text-2xl font-bold">פרימיום</h3>
+                        <div class="mt-4">
+                            <span class="text-4xl font-bold">₪899</span>
+                            <span class="text-emerald-100">/חודש</span>
+                        </div>
+                        <p class="mt-2 text-emerald-100">ארוחה יומית</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>ארוחה יומית (עד 30 ארוחות בחודש)</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>חיסכון של 25% ממחיר הרגיל</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>הזמנה מראש דרך האפליקציה</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>משקה ומנה ראשונה חינם עם כל ארוחה</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>אפשרות להזמנת אוכל מותאם אישית</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>תקף ל-60 יום</li>
+                        </ul>
+                        <button class="add-subscription-btn w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-bold transition" data-name="פרימיום" data-price="899">הוסף לסל</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- (קטע Features ו-FAQ – נשארים כפי שהם אצלך) -->
+
+    <!-- Features -->
+    <div class="py-12 bg-emerald-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-emerald-800 mb-4">למה לבחור במנוי?</h2>
+                <p class="text-lg text-emerald-600 max-w-2xl mx-auto">מנוי בקפיטריה הבריאה שלנו מציע יתרונות רבים שיעזרו לכם לחסוך זמן וכסף, תוך שמירה על תזונה בריאה ומאוזנת.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-item bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">חיסכון כספי</h3>
+                    <p class="text-emerald-600">חסכו עד 25% ממחיר הארוחות הרגיל עם תכניות המנויים שלנו. ככל שהמנוי גדול יותר, כך החיסכון גדול יותר.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-item bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">חיסכון בזמן</h3>
+                    <p class="text-emerald-600">הזמינו מראש את הארוחות שלכם ואספו אותן ללא המתנה בתור. פשוט הגיעו, קחו את הארוחה שלכם והמשיכו ביום שלכם.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-item bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">תכנון מראש</h3>
+                    <p class="text-emerald-600">תכננו את הארוחות שלכם מראש לפי לוח הזמנים שלכם. קבעו את הארוחות לימים ושעות שנוחים לכם.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-item bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">התאמה אישית</h3>
+                    <p class="text-emerald-600">בתכנית הפרימיום, תוכלו ליהנות מהתאמה אישית של הארוחות לפי העדפות תזונתיות ודרישות דיאטטיות.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-item bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">הטבות בלעדיות</h3>
+                    <p class="text-emerald-600">מנויים נהנים מהטבות בלעדיות כמו משקאות חינם, מנות ראשונות חינם, וגישה מוקדמת לתפריטים חדשים.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-item bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-2">תזונה בריאה</h3>
+                    <p class="text-emerald-600">שמרו על תזונה בריאה ומאוזנת בקלות עם ארוחות מתוכננות מראש, עשירות בערכים תזונתיים ומותאמות לצרכים שלכם.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-emerald-800 mb-4">שאלות נפוצות</h2>
+                <p class="text-lg text-emerald-600 max-w-2xl mx-auto">מצאו תשובות לשאלות הנפוצות ביותר על תכניות המנויים שלנו</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">איך עובד המנוי?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="faq-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-emerald-600">לאחר רכישת המנוי, תקבלו קוד אישי שתוכלו להשתמש בו בעת הזמנת ארוחות דרך האפליקציה או באתר. בחרו את הארוחות שברצונכם להזמין, בחרו את שעת האיסוף, והארוחה תהיה מוכנה עבורכם בזמן שבחרתם. המנוי מאפשר לכם להזמין מספר מוגדר של ארוחות בתקופת המנוי.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">האם ניתן לשתף את המנוי עם אדם נוסף?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="faq-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-emerald-600">המנוי הוא אישי ולא ניתן לשיתוף. עם זאת, אתם יכולים להזמין ארוחות עבור אחרים באמצעות המנוי שלכם. אם אתם מעוניינים במנוי משפחתי, צרו איתנו קשר לקבלת הצעה מותאמת אישית.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">מה קורה אם לא ניצלתי את כל הארוחות בתקופת המנוי?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="faq-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-emerald-600">ארוחות שלא נוצלו בתקופת המנוי יפוגו בסוף התקופה. עם זאת, אנו מציעים אפשרות להארכת תוקף המנוי ב-15 ימים נוספים בתשלום סמלי של 49 ₪, כדי לאפשר לכם לנצל את כל הארוחות שנותרו.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">האם ניתן לבטל מנוי?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="faq-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-emerald-600">ניתן לבטל מנוי תוך 14 יום מיום הרכישה וקבלת החזר מלא, בתנאי שלא נוצלו ארוחות מהמנוי. לאחר 14 יום או אם כבר נוצלו ארוחות, ניתן לקבל החזר יחסי עבור הארוחות שלא נוצלו, בניכוי דמי ביטול בסך 10% מערך המנוי.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="bg-emerald-50 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full flex justify-between items-center p-6 focus:outline-none">
+                            <span class="text-lg font-bold text-emerald-800">האם ניתן לשדרג מנוי קיים?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="faq-icon h-6 w-6 text-emerald-600 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6">
+                            <p class="text-emerald-600">כן, ניתן לשדרג מנוי קיים בכל עת. תשלמו רק את ההפרש בין המנוי הנוכחי למנוי המשודרג. צרו איתנו קשר או פנו לצוות הקפיטריה לביצוע השדרוג.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Form Modal -->
+    <div id="subscription-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-emerald-800" id="modal-title">הרשמה למנוי</h3>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <form id="subscription-form">
+                    <div class="mb-6">
+                        <div class="bg-emerald-50 p-4 rounded-lg mb-4">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-emerald-800" id="selected-plan">תכנית: בסיסי</span>
+                                <span class="font-bold text-emerald-800" id="selected-price">₪299</span>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-emerald-700 font-medium mb-1">שם מלא</label>
+                                <input type="text" id="name" name="name" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-emerald-700 font-medium mb-1">דוא"ל</label>
+                                <input type="email" id="email" name="email" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-emerald-700 font-medium mb-1">טלפון</label>
+                                <input type="tel" id="phone" name="phone" class="w-full p-3 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            </div>
+                            <div>
+                                <label class="custom-checkbox flex items-center">
+                                    <input type="checkbox" required>
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-emerald-700">אני מסכים/ה לתנאי השימוש ומדיניות הפרטיות</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-lg transition duration-300 font-bold">המשך לתשלום</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 hidden toast">
+        <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+            <span id="toast-message">הטופס נשלח בהצלחה!</span>
+        </div>
+    </div>
+
+    <div id="cart-toast" class="toast">נוסף לסל!</div>
+
+    <footer class="bg-emerald-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <!-- תוכן הפוטר שלך -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">נוטרי-טעים</h3>
+                    <p class="text-emerald-200">אוכל טעים ובריא</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">שעות פעילות</h3>
+                    <ul class="space-y-2 text-emerald-200">
+                        <li>ראשון - חמישי: 8:00 - 18:00</li>
+                        <li>שישי: 8:00 - 14:00</li>
+                        <li>שבת: סגור</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">צור קשר</h3>
+                    <ul class="space-y-2 text-emerald-200">
+                        <li>טלפון: 050-4259903</li>
+                        <li>דוא"ל: Emteazgama@gmail.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">הרשמה לעדכונים</h3>
+                    <form class="space-y-3">
+                        <div>
+                            <input type="email" placeholder="הזן את כתובת הדוא״ל שלך" class="w-full p-3 rounded-lg bg-emerald-700 text-white placeholder-emerald-300 border border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        </div>
+                        <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">הרשם</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-emerald-700 mt-8 pt-8 text-center text-emerald-300">
+                <p>&copy; 2025 נוטרי-טעים. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').onclick = function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        };
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            const badge = document.getElementById('cart-count');
+            badge.innerText = count;
+            badge.style.display = count > 0 ? 'inline-block' : 'none';
+        }
+        updateCartBadge();
+        // הוספה לסל
+        document.querySelectorAll('.add-subscription-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const name = btn.getAttribute('data-name');
+                const price = +btn.getAttribute('data-price');
+                const id = 'sub-' + name;
+                const item = { id, title: name, price, qty: 1, isSubscription: true };
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                const found = cart.find(i => i.id === id);
+                if (found) found.qty += 1;
+                else cart.push(item);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartBadge();
+                // toast
+                const toast = document.getElementById('cart-toast');
+                toast.style.display = 'block';
+                setTimeout(() => { toast.style.display = 'none'; }, 1700);
+                btn.innerText = 'נוסף!';
+                setTimeout(() => btn.innerText = 'הוסף לסל', 1200);
+            });
+        });
+        
+    document.querySelectorAll('.faq-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function () {
+            const content = this.nextElementSibling;
+            content.classList.toggle('hidden');
+            const icon = this.querySelector('.faq-icon');
+            if (content.classList.contains('hidden')) {
+                icon.classList.remove('rotate-180');
+            } else {
+                icon.classList.add('rotate-180');
+            }
+        });
+    });
+    </script>
+</body>
+</html>

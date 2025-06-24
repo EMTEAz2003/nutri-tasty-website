@@ -1,0 +1,239 @@
+﻿
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>הצוות - נוטרי-טעים</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+        }
+        /* תמונה מלבנית ולא עגולה */
+        .team-img {
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 0.75rem; /* rounded-lg */
+        }
+
+        @media (max-width: 700px) {
+            .team-img {
+                width: 100%;
+                height: 160px;
+            }
+
+            .team-card {
+                padding: 1.5rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-emerald-50 min-h-screen">
+    <!-- Header/Navbar -->
+    <header class="bg-emerald-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://i.pinimg.com/236x/d3/75/6c/d3756c7803ab55fc8b95cf0cdf16d975.jpg" alt="לוגו נוטרי-טעים" class="h-10 w-10 rounded-full mr-2 border-2 border-white shadow" />
+
+                <div class="text-2xl font-bold">
+
+                    <span>נוטרי-טעים</span>
+                </div>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6 space-x-reverse">
+                    <li><a href="index.html" class="hover:text-emerald-200 font-medium">דף הבית</a></li>
+                    <li><a href="menu.html" class="hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                    <li><a href="subscriptions.html" class="hover:text-emerald-200 font-medium">מנויים</a></li>
+                    <li><a href="nutrition.html" class="hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
+                    <li><a href="about.html" class="hover:text-emerald-200 font-medium">אודות</a></li>
+                    <li><a href="team.html" class="hover:text-emerald-200 font-bold underline">הצוות</a></li>
+                    <li><a href="suggestions.html">הצעות למנות</a></li>
+                    <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
+
+                </ul>
+            </nav>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-emerald-700 pb-4">
+            <ul class="px-4 pt-2 space-y-3">
+                <li><a href="index.html" class="block hover:text-emerald-200 font-medium">דף הבית</a></li>
+                <li><a href="menu.html" class="block hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                <li><a href="subscriptions.html" class="block hover:text-emerald-200 font-medium">מנויים</a></li>
+                <li><a href="nutrition.html" class="block hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
+                <li><a href="about.html" class="block hover:text-emerald-200 font-medium">אודות</a></li>
+                <li><a href="team.html" class="block hover:text-emerald-200 font-bold underline">הצוות</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+
+        <h1 class="text-3xl font-bold text-emerald-700 mb-10 text-center">הצוות שלנו</h1>
+        <a href="emteaz_fainl.pdf" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg shadow transition text-lg mb-10">
+            הצעת פרויקט - חלק א'
+        </a>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+            <!-- כרטיס אמתיאז -->
+            <!--<div class="team-card bg-white rounded-xl p-6 shadow hover:shadow-xl text-center">
+            <img src="imtiaz.jpg" alt="אמתיאז אבו ג'אמע" class="team-img mx-auto mb-4 object-cover border-4 border-emerald-300 shadow">
+            <h2 class="text-xl font-bold mb-2">אמתיאז אבו ג'אמע</h2>
+            <p class="text-gray-600 mb-4">מנהלת תזונה</p>
+            <a href="imtiaz.html" class="inline-block bg-emerald-600 text-white rounded-full px-6 py-2 font-bold hover:bg-emerald-700 transition">פרופיל אישי</a>
+        </div>-->
+            <div class="max-w-sm mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+                <img src="emteaz.jpg" alt="אמתיאז אבו ג'אמע" class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <span class="inline-block bg-green-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full mb-3">אחראית הצוות</span>
+                    <h3 class="text-2xl font-bold mb-2 text-gray-800 text-right">אמתיאז אבו ג'אמע</h3>
+                    <p class="text-gray-600 mb-4 text-right">
+                        אמתיאז אבו ג'אמע היא סטודנטית להנדסת מחשבים במרכז האקדמי רופין וגם היא האחראית של האתר
+                    </p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <span class="flex items-center gap-1">
+
+                            emteazgama@gmail.com
+                        </span>
+                        <span class="flex items-center gap-1">
+
+                            0504259903
+                        </span>
+                    </div>
+                    <a href="imtiaz.html" class="block w-full text-center py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition">צפה בפרופיל</a>
+                </div>
+            </div>
+
+            <!-- כרטיס נדב -->
+            <!--<div class="team-card bg-white rounded-xl p-6 shadow hover:shadow-xl text-center">
+                <img src="nadav.jpg" alt="נדב וולך" class="team-img mx-auto mb-4 object-cover border-4 border-orange-300 shadow">
+                <h2 class="text-xl font-bold mb-2">נדב וולך</h2>
+                <p class="text-gray-600 mb-4">מרצה הקורס</p>
+                <a href="nadav.html" class="inline-block bg-orange-500 text-white rounded-full px-6 py-2 font-bold hover:bg-orange-600 transition">פרופיל אישי</a>
+            </div>
+        </div>-->
+            <div class="max-w-sm mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+                <!-- תמונה מלבנית בראש -->
+                <img src="https://i1.wp.com/ric.org.il/wp-content/uploads/2023/11/ProfilePic3.jpeg?fit=990%2C1320&ssl=1" alt="נדב וולך" class="w-full h-56 object-cover">
+                <!-- תוכן הכרטיס -->
+                <div class="p-6">
+                    <!-- קטגוריה/תפקיד (תגית קטנה למעלה) -->
+                    <span class="inline-block bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full mb-3">מרצה הקורס</span>
+                    <!-- שם -->
+                    <h3 class="text-2xl font-bold mb-2 text-gray-800 text-right">נדב וולך</h3>
+                    <!-- תיאור קצר -->
+                    <p class="text-gray-600 mb-4 text-right">
+                        מרצה מצטיין, בעל גישה חדשנית להוראה, מוביל ומדרבן להצלחות.
+                    </p>
+                    <!-- שורה של פרטי יצירת קשר -->
+                    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <span class="flex items-center gap-1">
+                            voloch@yahoo.com
+                        </span>
+                        <span class="flex items-center gap-1">
+                            050-1234567
+                        </span>
+                    </div>
+                    <!-- כפתור מעבר לדף אישי -->
+                    <a href="nadav.html" class="block w-full text-center py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold transition">צפה בפרופיל</a>
+                </div>
+            </div>
+            <div class="flex justify-center mt-12">
+                <button id="contactBtn" class="bg-emerald-600 text-white rounded-full px-8 py-3 font-bold hover:bg-emerald-700 transition">
+                    צור קשר עם אחראית הצוות
+                </button>
+            </div>
+            <div id="contactFormContainer" class="flex justify-center mt-6"></div>
+
+    </main>
+    <footer class="bg-emerald-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">נוטרי-טעים</h3>
+                    <p class="text-emerald-200">אוכל טעים ובריא </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">שעות פעילות</h3>
+                    <ul class="space-y-2 text-emerald-200">
+                        <li>ראשון - חמישי: 8:00 - 18:00</li>
+                        <li>שישי: 8:00 - 14:00</li>
+                        <li>שבת: סגור</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">צור קשר</h3>
+                    <ul class="space-y-2 text-emerald-200">
+                        <li>טלפון: 050-4259903</li>
+                        <li>דוא"ל: Emteazgama@gmail.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">הרשמה לעדכונים</h3>
+                    <form class="space-y-3">
+                        <div>
+                            <input type="email" placeholder="הזן את כתובת הדוא״ל שלך" class="w-full p-3 rounded-lg bg-emerald-700 text-white placeholder-emerald-300 border border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        </div>
+                        <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">הרשם</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-emerald-700 mt-8 pt-8 text-center text-emerald-300">
+                <p>&copy; 2025 נוטרי-טעים. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Mobile menu toggle (אם יש לך)
+        const menuBtn = document.getElementById('menu-btn');
+        if (menuBtn) {
+            menuBtn.onclick = function () {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            };
+        }
+
+        // הוספת טופס קשר לדף הצוות
+        document.getElementById('contactBtn').addEventListener('click', function () {
+            const container = document.getElementById('contactFormContainer');
+            // אם הטופס כבר פתוח, אל תוסיף אותו שוב
+            if (container.innerHTML.trim() !== "") return;
+            container.innerHTML = `
+                <form id="contactForm" class="bg-white rounded-lg shadow p-6 w-full max-w-md">
+                    <h2 class="text-2xl font-bold mb-6 text-emerald-700 text-center">צור קשר עם אמתיאז</h2>
+                    <div class="mb-4">
+                        <label for="email" class="block text-right text-gray-700 font-medium mb-1">דוא"ל שלך:</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-emerald-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-400" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="block text-right text-gray-700 font-medium mb-1">הודעה:</label>
+                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-emerald-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-400" required></textarea>
+                    </div>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded-full transition w-full">שלח</button>
+                </form>
+                <div id="contactSuccess" class="hidden mt-4 text-center text-green-600 font-bold">
+                    ההודעה נשלחה בהצלחה! אמתיאז תחזור אליך בהקדם 😊
+                </div>
+            `;
+
+            // טיפול בשליחת טופס
+            document.getElementById('contactForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                document.getElementById('contactForm').style.display = 'none';
+                document.getElementById('contactSuccess').classList.remove('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>
