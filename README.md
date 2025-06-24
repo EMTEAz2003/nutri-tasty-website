@@ -31,6 +31,6 @@ This project is a responsive web application for a healthy cafeteria ordering sy
   ## Links
 
 - **Live site:** [http://emteazgama.byethost10.com]
-- **GitHub repository:** [your GitHub repo URL here]
+- **GitHub repository:** [https://github.com/EMTEAz2003/nutri-tasty-website.git]
 **Emteaz Abo Gama**
  - **Email: emteazgama@gmail.com**  
