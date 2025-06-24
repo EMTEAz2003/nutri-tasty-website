@@ -7,86 +7,78 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="indexStyle.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-   
+    <style>
+        body { font-family: 'Heebo', sans-serif; }
+        .cart-badge {
+            background: #16a34a; color: #fff; font-size: 0.9em;
+            border-radius: 9999px; padding: 0.1em 0.7em;
+            position: absolute; top: -8px; left: -10px;
+            min-width: 25px; text-align: center;
+        }
+        .toast {
+            animation: slideIn 0.2s, fadeOut 0.6s 1.7s forwards;
+            position: fixed; top: 18px; left: 50%;
+            transform: translateX(-50%); background: #16a34a;
+            color: #fff; padding: 14px 28px; border-radius: 16px;
+            font-size: 1.14em; z-index: 9999; display: none;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-50%) translateY(-30px);}
+            to { opacity: 1; transform: translateX(-50%) translateY(0);}
+        }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden;} }
+    </style>
 </head>
 <body>
-
-    <header class="bg-emerald-600 text-white shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="https://i.pinimg.com/236x/d3/75/6c/d3756c7803ab55fc8b95cf0cdf16d975.jpg" alt="לוגו נוטרי-טעים" class="h-10 w-10 rounded-full mr-2 border-2 border-white shadow" />
-
-                <div class="text-2xl font-bold">
-
-                    <span>נוטרי-טעים</span>
-                </div>
-            </div>
-            <nav class="hidden md:block">
-                <ul class="flex space-x-6 space-x-reverse">
-                    <li><a href="index.html" class="hover:text-emerald-200 font-medium font-bold underline">דף הבית</a></li>
-                    <li><a href="menu.html" class="hover:text-emerald-200 font-medium">תפריט יומי</a></li>
-                    <li><a href="subscriptions.html" class="hover:text-emerald-200 font-medium">מנויים</a></li>
-                    <li><a href="nutrition.html" class="hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
-                    <li><a href="about.html" class="hover:text-emerald-200 font-medium">אודות</a></li>
-                    <li><a href="team.html" class="hover:text-emerald-200 font-medium">הצוות</a></li>
-                    <li><a href="suggestions.html">הצעות למנות</a></li>
-                    <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
-
-                </ul>
-            </nav>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-white focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
+<header class="bg-emerald-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center">
+            <img src="https://i.pinimg.com/236x/d3/75/6c/d3756c7803ab55fc8b95cf0cdf16d975.jpg" alt="לוגו נוטרי-טעים" class="h-10 w-10 rounded-full mr-2 border-2 border-white shadow" />
+            <div class="text-2xl font-bold"><span>נוטרי-טעים</span></div>
         </div>
-
-        <div id="mobile-menu" class="md:hidden hidden bg-emerald-700 pb-4">
-            <ul class="px-4 pt-2 space-y-3">
-                <li><a href="index.html" class="block hover:text-emerald-200 font-medium font-bold underline">דף הבית</a></li>
-                <li><a href="menu.html" class="block hover:text-emerald-200 font-medium">תפריט יומי</a></li>
-                <li><a href="subscriptions.html" class="block hover:text-emerald-200 font-medium">מנויים</a></li>
-                <li><a href="nutrition.html" class="block hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
-                <li><a href="about.html" class="block hover:text-emerald-200 font-medium">אודות</a></li>
+        <nav class="hidden md:block">
+            <ul class="flex space-x-6 space-x-reverse">
+                <li><a href="index.html" class="hover:text-emerald-200 font-medium font-bold underline">דף הבית</a></li>
+                <li><a href="menu.html" class="hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+                <li><a href="subscriptions.html" class="hover:text-emerald-200 font-medium">מנויים</a></li>
+                <li><a href="nutrition.html" class="hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
+                <li><a href="about.html" class="hover:text-emerald-200 font-medium">אודות</a></li>
                 <li><a href="team.html" class="hover:text-emerald-200 font-medium">הצוות</a></li>
                 <li><a href="suggestions.html">הצעות למנות</a></li>
-                <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
-
+                <li>
+                  <a href="cart.html" class="hover:text-emerald-200 font-medium relative flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007 17h10a1 1 0 00.95-1.32L17 13M7 13V6h10v7"/>
+                      </svg>
+                      <span id="cart-count" class="cart-badge" style="display:none"></span>
+                      הסל שלי
+                  </a>
+                </li>
             </ul>
+        </nav>
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-white focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
-    </header>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden bg-emerald-700 pb-4">
+        <ul class="px-4 pt-2 space-y-3">
+            <li><a href="index.html" class="block hover:text-emerald-200 font-medium font-bold underline">דף הבית</a></li>
+            <li><a href="menu.html" class="block hover:text-emerald-200 font-medium">תפריט יומי</a></li>
+            <li><a href="subscriptions.html" class="block hover:text-emerald-200 font-medium">מנויים</a></li>
+            <li><a href="nutrition.html" class="block hover:text-emerald-200 font-medium">מידע תזונתי</a></li>
+            <li><a href="about.html" class="block hover:text-emerald-200 font-medium">אודות</a></li>
+            <li><a href="team.html" class="hover:text-emerald-200 font-medium">הצוות</a></li>
+            <li><a href="suggestions.html">הצעות למנות</a></li>
+            <li><a href="cart.html" class="hover:text-emerald-200 font-medium">הסל שלי</a></li>
+        </ul>
+    </div>
+</header>
 
-    <!--<section class="hero-pattern bg-emerald-50 py-16 md:py-24">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold text-emerald-800 mb-6">אוכל טעים ובריא </h1>
-                    <p class="text-xl text-emerald-700 mb-8">הזמינו ארוחות טריות ומזינות בקלות דרך המערכת שלנו. מתאים לכל סגנון תזונה וצרכים מיוחדים.</p>
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                        <a href="menu.html" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-lg shadow transition duration-300 text-center">הזמן עכשיו</a>
-                        <a href="subscriptions.html" class="bg-white hover:bg-emerald-50 text-emerald-700 font-bold py-3 px-6 rounded-lg shadow border border-emerald-200 transition duration-300 text-center">מנויים חודשיים</a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <div class="relative w-full max-w-md">
-                        <div class="absolute inset-0 bg-emerald-200 rounded-full transform translate-x-4 translate-y-4"></div>-->
-    <!--<div class="relative bg-emerald-600 rounded-full p-6 shadow-xl">-->
-    <!--<svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 15.9999V7.9999C21 6.89543 20.1046 5.9999 19 5.9999H5C3.89543 5.9999 3 6.89543 3 7.9999V15.9999M21 15.9999H3M21 15.9999C21 17.1045 20.1046 18 19 18H5C3.89543 18 3 17.1045 3 15.9999M12 12.9999C13.6569 12.9999 15 11.6567 15 9.9999C15 8.34304 13.6569 6.9999 12 6.9999C10.3431 6.9999 9 8.34304 9 9.9999C9 11.6567 10.3431 12.9999 12 12.9999Z" />
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 16V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V16M17.5 12.9999C17.5 15.2091 15.7091 16.9999 13.5 16.9999H10.5C8.29086 16.9999 6.5 15.2091 6.5 12.9999" />
-    </svg>-->
-    <!--</div>-->
-    <!--</div>
-                </div>
-            </div>
-        </div>
-    </section>-->
-    <section class="hero-pattern bg-emerald-50 py-16 md:py-24">
+ <section class="hero-pattern bg-emerald-50 py-16 md:py-24">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center">
                 <!-- תוכן ימין: טקסט וכפתורים -->
@@ -463,34 +455,57 @@
         </div>
     </footer>
 
+<div id="cart-toast" class="toast"></div>
 
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function () {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
+<script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-button').addEventListener('click', function () {
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // עדכון כמות בעגלה בראש הדף
+    function updateCartBadge() {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+        const badge = document.getElementById('cart-count');
+        badge.innerText = count;
+        badge.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+    updateCartBadge();
+
+    // פונקציה להוספה לעגלה (localStorage)
+    function addToCart(meal) {
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const found = cart.find(item => item.id === meal.id);
+        if (found) {
+            found.qty += 1;
+        } else {
+            cart.push({...meal, qty: 1});
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartBadge();
+    }
+
+    // טיפול בלחיצת כפתור "הוסף להזמנה" עבור כל מנה
+    document.querySelectorAll('.meal-card button').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const card = this.closest('.meal-card');
+            const name = card.querySelector('h3').textContent.trim();
+            const price = +card.querySelector('.text-lg.font-bold').textContent.replace(/[^\d]/g, '');
+            const id = 'meal-' + name.replace(/\s+/g, '-');
+            addToCart({id, name, price});
+            showToast(name + " נוסף לסל!");
         });
+    });
 
-        // Add to cart functionality
-        const addToCartButtons = document.querySelectorAll('.meal-card button');
-        let cartCount = 0;
-
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                cartCount++;
-
-                // Show confirmation
-                const mealName = this.closest('.meal-card').querySelector('h3').textContent;
-                const confirmation = document.createElement('div');
-                confirmation.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white py-2 px-4 rounded-lg shadow-lg z-50';
-                confirmation.textContent = `${mealName} נוסף לעגלה`;
-                document.body.appendChild(confirmation);
-
-                setTimeout(() => {
-                    confirmation.remove();
-                }, 2000);
-            });
-        });
-    </script>
+    // הצגת toast (מודעת הצלחה)
+    function showToast(text) {
+        const toast = document.getElementById('cart-toast');
+        toast.innerText = text;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2200);
+    }
+</script>
 </body>
 </html>
